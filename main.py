@@ -1,7 +1,7 @@
 # Importing the necessary Python modules.
 import streamlit as st
 
-"""This is the main module to run the app"""
+
 st.markdown("""
 <h1 style='text-align: center; color: #4CAF50;'>
 🧠 NeuroScanAI
