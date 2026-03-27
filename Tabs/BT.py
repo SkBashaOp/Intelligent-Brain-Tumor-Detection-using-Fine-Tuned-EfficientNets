@@ -1,106 +1,71 @@
 import streamlit as st
 import imagerec
-import random
 import streamlit.components.v1 as components
 
-
 def app():
-    
-    uploaded_file = None
 
-    st.title("Brain Tumor Predictor")
+    st.title("🧠 Brain Tumor Predictor")
 
+    st.markdown("### Types of Brain Tumors:")
 
+    st.info("Glioma: Tumor in brain support cells (glial cells).")
+    st.warning("Meningioma: Tumor in brain covering membranes.")
+    st.error("Pituitary: Tumor in hormone-controlling gland.")
 
-    st.markdown('''There are several types of brain tumors, including:''')
-                
-    st.info("Glioma: A type of tumor that originates in the glial cells, which are the supportive cells in the brain. Gliomas can be either low-grade (slow-growing) or high-grade (fast-growing) and can affect different parts of the brain.")
-                
-    st.warning("Meningioma: A tumor that arises from the meninges, which are the protective membranes that surround the brain and spinal cord. Meningiomas are usually benign and slow-growing, and may not require treatment if they are not causing symptoms.")
+    uploaded_file = st.file_uploader("📤 Upload MRI Image", type=['jpg','png','jpeg'])
 
-    st.error("Pituitary adenoma: A tumor that develops in the pituitary gland, which is located at the base of the brain. Pituitary adenomas can affect hormone production and cause a variety of symptoms, depending on the hormones that are affected.")
-    
-    uploaded_file = st.file_uploader("Choose a File", type=['jpg','png','jpeg'])
-
+    # Sidebar dataset link
     st.sidebar.markdown(
-    f'<a href="https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset" target="_blank" style="display: inline-block; padding: 12px 20px; background-color: blue; color: white; text-align: center; text-decoration: none; font-size: 16px; border-radius: 4px;">Brain Tumour Dataset</a>',
-    unsafe_allow_html=True
-)
+        '<a href="https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset" target="_blank" style="display: inline-block; padding: 12px 20px; background-color: blue; color: white; text-decoration: none; border-radius: 6px;">Dataset</a>',
+        unsafe_allow_html=True
+    )
 
-    if uploaded_file!=None:
-        st.image(uploaded_file)
-    x = st.button("Detect Condition")
-    if x:
-        with st.spinner("Predicting..."):
-            y,conf = imagerec.imagerecognise(uploaded_file,"Models/BrainTumuorModel.h5","Models/BrainTumuorLabels.txt")
-        
-        if conf < 0.99:
-            st.error(f"Invalid Image: The uploaded image does not appear to be a valid Brain MRI Scan. (Confidence: {conf:.2%})")
-            st.info("Please ensure you are uploading a clear, high-quality Brain MRI scan.")
-        else:
-            if y.strip() == "Safe":
-                components.html(
-                    """
-                    <style>
-                    h1{
-                        
-                        background: -webkit-linear-gradient(0.25turn,#01CCF7, #8BF5F5);
-                        -webkit-background-clip: text;
-                        -webkit-text-fill-color: transparent;
-                        font-family: "Source Sans Pro", sans-serif;
-                    }
-                    </style>
-                    <h1>It is Negative for Brain Tumors</h1>
-                    """
-                )
-            elif y.strip() == "Glioma":
-                components.html(
-                    """
-                    <style>
-                    h1{
-                        background: -webkit-linear-gradient(0.25turn,#FF4C4B, #F70000);
-                        -webkit-background-clip: text;
-                        -webkit-text-fill-color: transparent;
-                        font-family: "Source Sans Pro", sans-serif;
-                    }
-                    </style>
-                    <h1>Glioma Positive</h1>
-                
-                    """
-                )
-                st.info("Inference and Suggestion:")
-                st.write("Don't worry! For glioma treatment, radiation therapy is often used after surgery. The radiation kills any glioma cells that might remain after surgery. Radiation is often combined with chemotherapy. Radiation therapy might be the first glioma treatment if surgery isn't an option.")
-            elif y.strip() == "Meningioma":
-                components.html(
-                    """
-                    <style>
-                    h1{
-                        background: -webkit-linear-gradient(0.25turn,#FF4C4B, #F70000);
-                        -webkit-background-clip: text;
-                        -webkit-text-fill-color: transparent;
-                        font-family: "Source Sans Pro", sans-serif;
-                    }
-                    </style>
-                    <h1>Meningioma Positive</h1>
-                    
-                    """
-                )
-                st.info("Inference and Suggestion:")
-                st.write("Surgery is the most common type of treatment, but it can be difficult if the tumor is near a delicate part of the brain or spinal cord. Radiation therapy is also commonly used. The blood-brain barrier, which normally protects the brain and spinal cord from damaging chemicals, also keeps out many types of chemotherapy")
-            else:
-                components.html(
-                    """
-                    <style>
-                    h1{
-                        background: -webkit-linear-gradient(0.25turn,#FF4C4B, #F70000);
-                        -webkit-background-clip: text;
-                        -webkit-text-fill-color: transparent;
-                        font-family: "Source Sans Pro", sans-serif;
-                    }
-                    </style>
-                    <h1>Pituitary Tumor Found</h1>"""
-                )
-                st.info("Inference and Suggestion:")
-                st.write('Treatment of pituitary carcinomas is palliative, to relieve symptoms and improve the quality of life. Treatment may include the following: Surgery (transsphenoidal surgery or craniotomy) to remove the cancer, with or without radiation therapy. Drug therapy to stop the tumor from making hormones')
+    if uploaded_file:
+        st.image(uploaded_file, caption="Uploaded MRI", use_column_width=True)
 
-            st.sidebar.warning(f"Model Confidence: {conf:.2%}")
+    if st.button("🔍 Detect Condition"):
+
+        if uploaded_file is None:
+            st.warning("⚠️ Please upload an image first")
+            return
+
+        with st.spinner("Analyzing MRI..."):
+
+            # 🔥 REAL MODEL PREDICTION
+            y, conf = imagerec.imagerecognise(uploaded_file)
+
+        # Confidence bar
+        st.progress(int(conf * 100))
+        st.success(f"Confidence: {conf:.2%}")
+
+        # LOW CONFIDENCE CHECK
+        if conf < 0.80:
+            st.error("❌ Invalid MRI or unclear image. Try a better scan.")
+            return
+
+        # RESULT DISPLAY
+        if y == "No Tumor":
+            components.html("""
+                <h1 style='color:green;'>✅ No Tumor Detected</h1>
+            """)
+
+        elif y == "Glioma":
+            components.html("""
+                <h1 style='color:red;'>⚠️ Glioma Detected</h1>
+            """)
+            st.info("Radiation + chemotherapy may be required.")
+
+        elif y == "Meningioma":
+            components.html("""
+                <h1 style='color:red;'>⚠️ Meningioma Detected</h1>
+            """)
+            st.info("Often treatable via surgery and radiation.")
+
+        elif y == "Pituitary":
+            components.html("""
+                <h1 style='color:red;'>⚠️ Pituitary Tumor Detected</h1>
+            """)
+            st.info("Hormone therapy or surgery may be needed.")
+
+        # Sidebar confidence
+        st.sidebar.warning(f"Model Confidence: {conf:.2%}")
