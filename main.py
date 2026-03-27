@@ -1,4 +1,13 @@
 """This is the main module to run the app"""
+st.markdown("""
+<h1 style='text-align: center; color: #4CAF50;'>
+🧠 NeuroScanAI
+</h1>
+<p style='text-align: center; font-size:18px;'>
+AI-powered Brain Tumor Detection using EfficientNetB3
+</p>
+<hr>
+""", unsafe_allow_html=True)
 
 # Importing the necessary Python modules.
 import streamlit as st

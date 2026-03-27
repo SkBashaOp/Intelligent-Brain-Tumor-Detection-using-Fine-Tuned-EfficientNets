@@ -27,4 +27,4 @@ def imagerecognise(uploadedfile):
     index = np.argmax(output_data)
     confidence = float(output_data[0][index])
 
-    return class_labels[index], confidence
+    return class_labels[index], confidence, output_data[0]
