@@ -1,31 +1,48 @@
-# MRI-Deep-Analysis
+# Intelligent Brain Tumor Detection using Fine-Tuned EfficientNets
 
-![home](https://github.com/MainakRepositor/MRI-Deep-Analysis/assets/64016811/cb736790-a848-4851-a647-878a18f04ec6)
+![Brain Tumor Detection](https://github.com/MainakRepositor/MRI-Deep-Analysis/assets/64016811/cb736790-a848-4851-a647-878a18f04ec6)
 
+## Overview
+This project leverages **Deep Learning** to detect and classify brain tumors from MRI scans with high precision. By utilizing a **Fine-Tuned EfficientNetB3** architecture, the model can accurately identify three major types of tumors: **Glioma, Meningioma, and Pituitary tumors**, as well as differentiate them from **Safe (Healthy)** scans.
 
-Detecting tumor severity using machine learning (ML) and deep learning (DL) techniques in MRI scans has become an increasingly promising area in medical research. Here’s a high-level overview of the process:
+## Key Features
+- **Accurate Classification**: Differentiates between Glioma, Meningioma, Pituitary tumors, and Healthy scans.
+- **Robust Validation**: Implements a confidence threshold (99%) to ensure the uploaded image is a valid Brain MRI scan.
+- **Medical Insights**: Provides brief medical descriptions and suggested treatment paths for each detection.
+- **User-Friendly Interface**: Built with **Streamlit** for seamless interaction and instant results.
 
-**Data Collection and Preprocessing:**
-- Gathering a dataset of MRI images with labeled tumor severity levels.
-- Preprocessing involves normalization, resizing, and noise reduction to standardize the images and enhance their quality.
+## Technology Stack
+- **Deep Learning**: TensorFlow/Keras (EfficientNetB3)
+- **Web App**: Streamlit
+- **Data Processing**: NumPy, OpenCV
+- **Visualization**: Matplotlib
 
-**Feature Extraction:**
-- Extracting meaningful features from the MRI images.
-- For instance, in DL, this could involve using convolutional neural networks (CNNs) to automatically learn relevant features.
+## Dataset
+The model was trained on the [Brain Tumor MRI Dataset](https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset) from Kaggle, encompassing a diverse set of MRI images for various tumor types.
 
-**Model Development:**
-- Utilizing ML/DL models to classify tumor severity levels based on the extracted features.
-- ML algorithms Random Forests is employed, along with DL models like CNNs-based ResNet-50 for detection tasks.
-  
-**Training and Validation:**
-- Splitting the dataset into training, validation, and testing sets.
-- Training the model on the training set and validating its performance on the validation set to fine-tune hyperparameters and avoid overfitting.
+## How to Run Locally
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/SkBashaOp/Intelligent-Brain-Tumor-Detection-using-Fine-Tuned-EfficientNets.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd Intelligent-Brain-Tumor-Detection-using-Fine-Tuned-EfficientNets
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Start the app:
+   ```bash
+   streamlit run main.py
+   ```
 
+## Usage
+- Open the app in your browser (usually at `http://localhost:8501`).
+- Navigate to the **Brain Tumor** page.
+- Upload a clear MRI scan in JPG, PNG, or JPEG format.
+- Click **Detect Condition** to see the model's prediction and medical insights.
 
-Dataset Link: https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset/data
-
-Open in Kaggle for best peformance:
-1. Click on the link
-2. Click on New Notebook
-3. Upload the code
-4. Run all and enjoy!
+---
+*Disclaimer: This tool is intended for educational purposes and research only. It should not be used as a substitute for professional medical diagnosis.*
