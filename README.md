@@ -1,7 +1,5 @@
 # Intelligent Brain Tumor Detection using Fine-Tuned EfficientNets
 
-![Brain Tumor Detection](https://github.com/MainakRepositor/MRI-Deep-Analysis/assets/64016811/cb736790-a848-4851-a647-878a18f04ec6)
-
 ## Overview
 This project leverages **Deep Learning** to detect and classify brain tumors from MRI scans with high precision. By utilizing a **Fine-Tuned EfficientNetB3** architecture, the model can accurately identify three major types of tumors: **Glioma, Meningioma, and Pituitary tumors**, as well as differentiate them from **Safe (Healthy)** scans.
 
