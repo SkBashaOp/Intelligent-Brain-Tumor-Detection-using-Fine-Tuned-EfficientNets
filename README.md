@@ -5,7 +5,7 @@ This project leverages **Deep Learning** to detect and classify brain tumors fro
 
 ## Key Features
 - **Accurate Classification**: Differentiates between Glioma, Meningioma, Pituitary tumors, and Healthy scans.
-- **Robust Validation**: Implements a confidence threshold (99%) to ensure the uploaded image is a valid Brain MRI scan.
+- **Robust Validation**: Implements a confidence threshold (95%) to ensure the uploaded image is a valid Brain MRI scan.
 - **Medical Insights**: Provides brief medical descriptions and suggested treatment paths for each detection.
 - **User-Friendly Interface**: Built with **Streamlit** for seamless interaction and instant results.
 
